@@ -19,6 +19,11 @@ public class Alumno {
 
 	@Column(name = "alum_nombre")
 	private String nombre;
+	
+	@Override
+	public String toString() {
+		return "Alumno [id=" + id + ", nombre=" + nombre + "]";
+	}
 
 	// set y get
 	public Integer getId() {
