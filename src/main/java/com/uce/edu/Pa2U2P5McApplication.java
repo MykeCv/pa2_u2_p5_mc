@@ -1,25 +1,27 @@
 package com.uce.edu;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.uce.edu.repository.modelo.Ciudadano;
-import com.uce.edu.repository.modelo.Empleado;
-import com.uce.edu.service.ICiudadanoService;
-import com.uce.edu.service.IEmpleadoService;
+import com.uce.edu.repository.modelo.Autor;
+import com.uce.edu.repository.modelo.Libro;
+import com.uce.edu.service.IAlumnoService;
+import com.uce.edu.service.ILibroService;
 
 @SpringBootApplication
 public class Pa2U2P5McApplication implements CommandLineRunner {
 
 	@Autowired
-	private ICiudadanoService ciudadanoService;
+	private ILibroService iLibroService;
+
 	@Autowired
-	private IEmpleadoService empleadoService;
+	private IAlumnoService alumnoService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Pa2U2P5McApplication.class, args);
@@ -28,21 +30,31 @@ public class Pa2U2P5McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		// 1
-		Ciudadano ciud = new Ciudadano();
-		ciud.setNombre("Julio");
-		ciud.setApellido("Mena");
+		Libro libro = new Libro();
+		libro.setTitulo("JAVA");
+		libro.setFechaPublicacion(LocalDateTime.now());
 
-		Empleado empl = new Empleado();
-		empl.setFechaIngreso(LocalDateTime.now());
-		empl.setSalario(BigDecimal.valueOf(100));
+		Autor autor1 = new Autor();
+		autor1.setNombre("Pepito Perez");
+		autor1.setNacionalidad("Ecuatoriano");
 
-//		this.ciudadanoService.guardar(ciud);
-		
+		Autor autor2 = new Autor();
+		autor2.setNombre("Daniel Teran");
+		autor2.setNacionalidad("Ecuatoriano");
 
-		Ciudadano ciud1 = this.ciudadanoService.buscar(1);
-		empl.setCiudadano(ciud1);
-		this.empleadoService.guardar(empl);
+		Set<Autor> autores = new HashSet<Autor>();
+		autores.add(autor1);
+		autores.add(autor2);
+
+		libro.setAutores(autores);
+
+		Set<Libro> libros = new HashSet<Libro>();
+		libros.add(libro);
+
+		autor1.setLibros(libros);
+		autor2.setLibros(libros);
+
+		this.iLibroService.guardar(libro);
 	}
 
 }

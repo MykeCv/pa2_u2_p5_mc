@@ -8,4 +8,8 @@ public interface ICiudadanoService {
 
 	public void guardar(Ciudadano ciudadano);
 
+	public void borrar(int id);
+
+	public void actualizar(Ciudadano ciudadano);
+
 }
