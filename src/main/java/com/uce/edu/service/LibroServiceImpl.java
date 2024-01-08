@@ -18,4 +18,22 @@ public class LibroServiceImpl implements ILibroService {
 		this.iLibroRepository.insertar(libro);
 	}
 
+	@Override
+	public Libro buscar(Integer id) {
+		// TODO Auto-generated method stub
+		return this.iLibroRepository.seleccionar(id);
+	}
+
+	@Override
+	public void actulizar(Libro libro) {
+		// TODO Auto-generated method stub
+		this.iLibroRepository.actualizar(libro);
+	}
+
+	@Override
+	public void borrar(Integer id) {
+		// TODO Auto-generated method stub
+		this.iLibroRepository.eliminar(id);
+	}
+
 }

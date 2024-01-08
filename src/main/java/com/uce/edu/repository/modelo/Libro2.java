@@ -26,7 +26,7 @@ public class Libro2 {
 
 	@Column(name = "libr_fecha_publicacion")
 	private LocalDateTime fechaPublicacion;
-	
+
 	private List<AutorLibro> autoreslibros;
 
 	// Sets and gets
