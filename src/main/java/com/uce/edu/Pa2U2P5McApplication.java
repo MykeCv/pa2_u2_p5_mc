@@ -1,7 +1,9 @@
 package com.uce.edu;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.uce.edu.repository.modelo.Autor;
+import com.uce.edu.repository.modelo.Autor2;
+import com.uce.edu.repository.modelo.AutorLibro;
 import com.uce.edu.repository.modelo.Libro;
+import com.uce.edu.repository.modelo.Libro2;
 import com.uce.edu.service.ILibroService;
 
 @SpringBootApplication
@@ -26,75 +30,41 @@ public class Pa2U2P5McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		Libro libro = new Libro();
-		libro.setTitulo("JAVA");
+		Libro2 libro = new Libro2();
+		libro.setTitulo("JAVA2");
 		libro.setFechaPublicacion(LocalDateTime.now());
 
-		Libro libro1 = new Libro();
-		libro1.setTitulo("ANALITICS");
-		libro1.setFechaPublicacion(LocalDateTime.now());
+		Autor2 autor1 = new Autor2();
+		autor1.setNombre("Pepito Perez2");
+		autor1.setNacionalidad("Ecuatoriano2");
 
-		Libro libro2 = new Libro();
-		libro2.setTitulo("TRUE HISTORY");
-		libro2.setFechaPublicacion(LocalDateTime.now());
+		Autor2 autor2 = new Autor2();
+		autor2.setNombre("Daniel Teran2");
+		autor2.setNacionalidad("Ecuatoriano2");
 
-		Libro libro3 = new Libro();
-		libro3.setTitulo("APLICATION V");
-		libro3.setFechaPublicacion(LocalDateTime.now());
-
-		Libro libro4 = new Libro();
-		libro4.setTitulo("TRAFALGAR D WATER LAW");
-		libro4.setFechaPublicacion(LocalDateTime.now());
-
-		Libro libro5 = new Libro();
-		libro5.setTitulo("GOL D ROGUER");
-		libro5.setFechaPublicacion(LocalDateTime.now());
-
-		Autor autor1 = new Autor();
-		autor1.setNombre("Pepito Perez");
-		autor1.setNacionalidad("Ecuatoriano");
-
-		Autor autor2 = new Autor();
-		autor2.setNombre("Daniel Teran");
-		autor2.setNacionalidad("Ecuatoriano");
-
-		Autor autor3 = new Autor();
-		autor3.setNombre("Sptheve Hipton");
-		autor3.setNacionalidad("EstadoUnidense");
-
-		Autor autor4 = new Autor();
-		autor4.setNombre("Isacc Amstrom");
-		autor4.setNacionalidad("Aleman");
-
-		Autor autor5 = new Autor();
-		autor5.setNombre("Frederic Voltovik");
-		autor5.setNacionalidad("Ruso");
-
-		Set<Autor> autores = new HashSet<Autor>();
+		Set<Autor2> autores = new HashSet<Autor2>();
 		autores.add(autor1);
 		autores.add(autor2);
-		autores.add(autor3);
-		autores.add(autor4);
-		autores.add(autor5);
 
-		libro.setAutores(autores);
+		AutorLibro autorLibro1 = new AutorLibro();
+		autorLibro1.setLibro2(libro);
+		autorLibro1.setAutor2(autor1);
+		autorLibro1.setDateTime(LocalDateTime.now());
 
-		Set<Libro> libros = new HashSet<Libro>();
-		libros.add(libro);
-		libros.add(libro1);
-		libros.add(libro2);
-		Set<Libro> libros2 = new HashSet<Libro>();
-		libros.add(libro3);
-		libros.add(libro4);
-		libros.add(libro5);
+		AutorLibro autorLibro2 = new AutorLibro();
+		autorLibro2.setLibro2(libro);
+		autorLibro2.setAutor2(autor2);
+		autorLibro2.setDateTime(LocalDateTime.now());
 
-		autor1.setLibros(libros);
-		autor2.setLibros(libros);
-		autor3.setLibros(libros2);
-		autor4.setLibros(libros2);
-		autor5.setLibros(libros2);
+		List<AutorLibro> lista = new ArrayList<>();
+		lista.add(autorLibro1);
+		lista.add(autorLibro2);
 
-		this.iLibroService.guardar(libro);
+		libro.setAutoreslibros(lista);
+
+		//this.iLibroService.guardar(libro);
+		Libro libroFinal=this.iLibroService.buscarPorNombre("ANALITICS");
+		System.out.println(libroFinal);
 	}
 
 }

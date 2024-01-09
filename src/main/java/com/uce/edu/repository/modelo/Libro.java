@@ -71,4 +71,9 @@ public class Libro {
 		this.fechaPublicacion = fechaPublicacion;
 	}
 
+	@Override
+	public String toString() {
+		return "Libro [id=" + id + ", titulo=" + titulo + ", fechaPublicacion=" + fechaPublicacion + "]";
+	}
+
 }
