@@ -1,24 +1,24 @@
 package com.uce.edu;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.uce.edu.repository.modelo.Autor2;
-import com.uce.edu.repository.modelo.AutorLibro;
 import com.uce.edu.repository.modelo.Libro;
-import com.uce.edu.repository.modelo.Libro2;
 import com.uce.edu.service.ILibroService;
 
 @SpringBootApplication
 public class Pa2U2P5McApplication implements CommandLineRunner {
+
+	// 1. Query (JPQL)
+	// 1.1 TypedQuery
+	// 1.2 NamedQuery
+	// 2. Native Query
+	// 3. Criteria API Query
 
 	@Autowired
 	private ILibroService iLibroService;
@@ -30,41 +30,28 @@ public class Pa2U2P5McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		Libro2 libro = new Libro2();
-		libro.setTitulo("JAVA2");
-		libro.setFechaPublicacion(LocalDateTime.now());
+		System.out.println("Query");
+		List<Libro> lista = this.iLibroService.buscarPorFecha(LocalDateTime.of(2023, 1, 1, 7, 15));
+		for (Libro libro : lista) {
+			System.out.println(libro);
+		}
+		System.out.println("TypedQuery");
+		Libro l1 = this.iLibroService.buscarPorTitulo("TRAFALGAR D WATER LAW");
+		System.out.println(l1);
 
-		Autor2 autor1 = new Autor2();
-		autor1.setNombre("Pepito Perez2");
-		autor1.setNacionalidad("Ecuatoriano2");
+		List<Libro> lista2 = this.iLibroService.buscarPorFechaPubli(LocalDateTime.of(2023, 1, 1, 7, 15));
+		for (Libro libro : lista2) {
+			System.out.println(libro);
+		}
 
-		Autor2 autor2 = new Autor2();
-		autor2.setNombre("Daniel Teran2");
-		autor2.setNacionalidad("Ecuatoriano2");
+		System.out.println("NamedQuery");
+		Libro l2 = this.iLibroService.buscarPorTituloNamed("GOL D ROGUER");
+		System.out.println(l2);
+		List<Libro> lista3 = this.iLibroService.buscarPorFechaPubliNamed(LocalDateTime.of(2023, 1, 1, 7, 15));
+		for (Libro libro : lista3) {
+			System.out.println(libro);
+		}
 
-		Set<Autor2> autores = new HashSet<Autor2>();
-		autores.add(autor1);
-		autores.add(autor2);
-
-		AutorLibro autorLibro1 = new AutorLibro();
-		autorLibro1.setLibro2(libro);
-		autorLibro1.setAutor2(autor1);
-		autorLibro1.setDateTime(LocalDateTime.now());
-
-		AutorLibro autorLibro2 = new AutorLibro();
-		autorLibro2.setLibro2(libro);
-		autorLibro2.setAutor2(autor2);
-		autorLibro2.setDateTime(LocalDateTime.now());
-
-		List<AutorLibro> lista = new ArrayList<>();
-		lista.add(autorLibro1);
-		lista.add(autorLibro2);
-
-		libro.setAutoreslibros(lista);
-
-		//this.iLibroService.guardar(libro);
-		Libro libroFinal=this.iLibroService.buscarPorNombre("ANALITICS");
-		System.out.println(libroFinal);
 	}
 
 }
