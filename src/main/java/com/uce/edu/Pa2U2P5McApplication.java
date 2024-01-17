@@ -1,15 +1,13 @@
 package com.uce.edu;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.uce.edu.repository.modelo.Libro;
-import com.uce.edu.service.ILibroService;
+import com.uce.edu.repository.modelo.Ciudadano;
+import com.uce.edu.repository.modelo.Empleado;
+import com.uce.edu.service.ICiudadanoService;
 
 @SpringBootApplication
 public class Pa2U2P5McApplication implements CommandLineRunner {
@@ -17,11 +15,11 @@ public class Pa2U2P5McApplication implements CommandLineRunner {
 	// 1. Query (JPQL)
 	// 1.1 TypedQuery
 	// 1.2 NamedQuery
-	// 2. Native Query
+	// 2. Native Query //Mantener el rendimiento
 	// 3. Criteria API Query
 
 	@Autowired
-	private ILibroService iLibroService;
+	private ICiudadanoService ciudadanoService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Pa2U2P5McApplication.class, args);
@@ -30,28 +28,11 @@ public class Pa2U2P5McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("Query");
-		List<Libro> lista = this.iLibroService.buscarPorFecha(LocalDateTime.of(2023, 1, 1, 7, 15));
-		for (Libro libro : lista) {
-			System.out.println(libro);
-		}
-		System.out.println("TypedQuery");
-		Libro l1 = this.iLibroService.buscarPorTitulo("TRAFALGAR D WATER LAW");
-		System.out.println(l1);
+		Empleado empl = this.ciudadanoService.buscarPorCedula("1724362106");
+		System.out.println(empl);
 
-		List<Libro> lista2 = this.iLibroService.buscarPorFechaPubli(LocalDateTime.of(2023, 1, 1, 7, 15));
-		for (Libro libro : lista2) {
-			System.out.println(libro);
-		}
-
-		System.out.println("NamedQuery");
-		Libro l2 = this.iLibroService.buscarPorTituloNamed("GOL D ROGUER");
-		System.out.println(l2);
-		List<Libro> lista3 = this.iLibroService.buscarPorFechaPubliNamed(LocalDateTime.of(2023, 1, 1, 7, 15));
-		for (Libro libro : lista3) {
-			System.out.println(libro);
-		}
-
+		Ciudadano ciu = this.ciudadanoService.buscarPorCedulaCiud("1724362106");
+		System.out.println(ciu);
 	}
 
 }

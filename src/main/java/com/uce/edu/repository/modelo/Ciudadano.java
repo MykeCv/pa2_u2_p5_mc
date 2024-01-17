@@ -18,16 +18,18 @@ public class Ciudadano {
 	@SequenceGenerator(name = "seq_ciudadano", sequenceName = "seq_ciudadano", allocationSize = 1)
 	@Column(name = "ciud_id")
 	private Integer id;
-	
+
 	@Column(name = "ciud_nombre")
 	private String nombre;
-	
+
 	@Column(name = "ciud_apellido")
 	private String apellido;
-	
+
+	@Column(name = "ciud_cedula")
+	private String cedula;
+
 	@OneToOne(mappedBy = "ciudadano")
 	private Empleado empleado;
-	
 
 	// set y get
 	public Integer getId() {
@@ -60,6 +62,14 @@ public class Ciudadano {
 
 	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
+	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
 	}
 
 }
