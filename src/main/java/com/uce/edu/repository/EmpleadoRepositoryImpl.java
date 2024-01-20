@@ -21,4 +21,18 @@ public class EmpleadoRepositoryImpl implements IEmpleadoRepository {
 		this.entityManager.persist(empleado);
 	}
 
+	@Override
+	public Empleado seleccionar(Integer id) {
+		return this.entityManager.find(Empleado.class, id);
+	}
+
+	@Override
+	public void eliminar(Integer id) {
+		this.entityManager.remove(this.seleccionar(id));
+	}
+
+	@Override
+	public void actualizar(Empleado empleado) {
+		this.entityManager.merge(empleado);
+	}
 }

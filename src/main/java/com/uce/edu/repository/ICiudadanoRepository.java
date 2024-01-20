@@ -14,7 +14,18 @@ public interface ICiudadanoRepository {
 	public void actualizar(Ciudadano ciudadano);
 
 	public Empleado seleccionarPorCedula(String cedula);
-	
-	public Ciudadano seleccionarPorCedulaciud(String cedula);
-}
 
+	public Ciudadano seleccionarPorCedulaciud(String cedula);
+	// ------------------
+
+	public Ciudadano seleccionarPorNombre(String nombre);
+
+	public Ciudadano seleccionarPorApellido(String apellido);
+
+	public Ciudadano seleccionarPorNacionalidad(String nacionalidad);
+
+	public Ciudadano seleccionarPorEdad(String edad);
+
+	public Ciudadano seleccionarPorTitulo(String titulo);
+
+}

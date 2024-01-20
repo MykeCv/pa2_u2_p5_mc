@@ -49,4 +49,34 @@ public class ICiudadanoServiceImpl implements ICiudadanoService {
 		return this.ciudadanoRepository.seleccionarPorCedulaciud(cedula);
 	}
 
+	@Override
+	public Ciudadano buscarPorNombre(String nombre) {
+		// TODO Auto-generated method stub
+		return this.ciudadanoRepository.seleccionarPorNombre(nombre);
+	}
+
+	@Override
+	public Ciudadano buscarPorApellido(String apellido) {
+		// TODO Auto-generated method stub
+		return this.ciudadanoRepository.seleccionarPorApellido(apellido);
+	}
+
+	@Override
+	public Ciudadano buscarPorNacionalidad(String nacionalidad) {
+		// TODO Auto-generated method stub
+		return this.ciudadanoRepository.seleccionarPorNacionalidad(nacionalidad);
+	}
+
+	@Override
+	public Ciudadano buscarPorEdad(String edad) {
+		// TODO Auto-generated method stub
+		return this.ciudadanoRepository.seleccionarPorEdad(edad);
+	}
+
+	@Override
+	public Ciudadano buscarPorTitulo(String titulo) {
+		// TODO Auto-generated method stub
+		return this.ciudadanoRepository.seleccionarPorTitulo(titulo);
+	}
+
 }

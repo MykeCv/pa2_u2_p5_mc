@@ -1,5 +1,6 @@
 package com.uce.edu.repository.modelo;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,8 +29,17 @@ public class Ciudadano {
 	@Column(name = "ciud_cedula")
 	private String cedula;
 
-	@OneToOne(mappedBy = "ciudadano")
-	private Empleado empleado;
+	@Column(name = "ciud_nacionalidad")
+	private String nacionalidad;
+
+	@Column(name = "ciud_edad")
+	private String edad;
+
+	@Column(name = "ciud_titulo")
+	private String titulo;
+
+	@OneToOne(mappedBy = "ciudadano", cascade = CascadeType.ALL)
+    private Empleado empleado;
 
 	// set y get
 	public Integer getId() {
@@ -70,6 +80,30 @@ public class Ciudadano {
 
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
+	}
+
+	public String getNacionalidad() {
+		return nacionalidad;
+	}
+
+	public void setNacionalidad(String nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
+
+	public String getEdad() {
+		return edad;
+	}
+
+	public void setEdad(String edad) {
+		this.edad = edad;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 }
