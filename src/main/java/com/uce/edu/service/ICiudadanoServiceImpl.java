@@ -1,5 +1,7 @@
 package com.uce.edu.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +67,43 @@ public class ICiudadanoServiceImpl implements ICiudadanoService {
 	public Ciudadano buscarPorCriteriaAndOr(String nombre, String apellido, String cedula) {
 		// TODO Auto-generated method stub
 		return this.ciudadanoRepository.seleccionarPorCriteriaAndOr(nombre, apellido, cedula);
+	}
+
+	// TAREA
+	@Override
+	public Ciudadano buscarPorEdadCriteria(String edad) {
+		// TODO Auto-generated method stub
+		return this.ciudadanoRepository.seleccionarPorEdadCriteria(edad);
+	}
+
+	@Override
+	public List<Ciudadano> buscarPorNacionalidadCriteria(String nacionalidad) {
+		// TODO Auto-generated method stub
+		return this.ciudadanoRepository.seleccionarPorNacionalidadCriteria(nacionalidad);
+	}
+
+	@Override
+	public Ciudadano buscarPorTituloCriteria(String titulo) {
+		// TODO Auto-generated method stub
+		return this.ciudadanoRepository.seleccionarPorTituloCriteria(titulo);
+	}
+
+	@Override
+	public Ciudadano buscarPorCriteria1(String edad, String nacionalidad, String cedula) {
+		// TODO Auto-generated method stub
+		return this.ciudadanoRepository.seleccionarPorCriteria1(edad, nacionalidad, cedula);
+	}
+
+	@Override
+	public List<Ciudadano> buscarPorCriteria2(String edad, String titulo) {
+		// TODO Auto-generated method stub
+		return this.ciudadanoRepository.seleccionarPorCriteria2(edad, titulo);
+	}
+
+	@Override
+	public Ciudadano buscarPorCriteria3(String nacionalidad, String titulo) {
+		// TODO Auto-generated method stub
+		return this.ciudadanoRepository.seleccionarPorCriteria3(nacionalidad, titulo);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.uce.edu.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.uce.edu.repository.modelo.Ciudadano;
@@ -151,6 +153,135 @@ public class CiudadanoRepositoryImpl implements ICiudadanoRepository {
 		// 3. Construimos el SQL final
 		myCriteriaQuery.select(myFrom).where(condicionTotal);
 		// 4. Ejecutamos la consulta con un typedQuery
+		TypedQuery<Ciudadano> myTypedQuery = this.entityManager.createQuery(myCriteriaQuery);
+		return myTypedQuery.getSingleResult();
+	}
+	// TAREA CRITERIA API QUERY
+
+	@Override
+	public Ciudadano seleccionarPorEdadCriteria(String edad) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder myCriteria = this.entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<Ciudadano> myCriteriaQuery = myCriteria.createQuery(Ciudadano.class);
+
+		Root<Ciudadano> myFrom = myCriteriaQuery.from(Ciudadano.class);
+
+		Predicate condicionEdad = myCriteria.equal(myFrom.get("edad"), edad);
+
+		myCriteriaQuery.select(myFrom).where(condicionEdad);
+
+		TypedQuery<Ciudadano> myTypedQuery = this.entityManager.createQuery(myCriteriaQuery);
+		return myTypedQuery.getSingleResult();
+	}
+
+	@Override
+	public List<Ciudadano> seleccionarPorNacionalidadCriteria(String nacionalidad) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder myCriteria = this.entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<Ciudadano> myCriteriaQuery = myCriteria.createQuery(Ciudadano.class);
+
+		Root<Ciudadano> myFrom = myCriteriaQuery.from(Ciudadano.class);
+
+		Predicate condicionNacionalidad = myCriteria.equal(myFrom.get("nacionalidad"), nacionalidad);
+
+		myCriteriaQuery.select(myFrom).where(condicionNacionalidad);
+
+		TypedQuery<Ciudadano> myTypedQuery = this.entityManager.createQuery(myCriteriaQuery);
+		return myTypedQuery.getResultList();
+	}
+
+	@Override
+	public Ciudadano seleccionarPorTituloCriteria(String titulo) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder myCriteria = this.entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<Ciudadano> myCriteriaQuery = myCriteria.createQuery(Ciudadano.class);
+
+		Root<Ciudadano> myFrom = myCriteriaQuery.from(Ciudadano.class);
+
+		Predicate condicionTitulo = myCriteria.equal(myFrom.get("titulo"), titulo);
+
+		myCriteriaQuery.select(myFrom).where(condicionTitulo);
+
+		TypedQuery<Ciudadano> myTypedQuery = this.entityManager.createQuery(myCriteriaQuery);
+		return myTypedQuery.getSingleResult();
+	}
+
+	@Override
+	public Ciudadano seleccionarPorCriteria1(String edad, String nacionalidad, String cedula) {
+		// TODO Auto-generated method stub
+
+		CriteriaBuilder myCriteriaBuilder = this.entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<Ciudadano> myCriteriaQuery = myCriteriaBuilder.createQuery(Ciudadano.class);
+
+		Root<Ciudadano> myFrom = myCriteriaQuery.from(Ciudadano.class);
+
+		Predicate condicionGenerica = null;
+
+		if (nacionalidad.startsWith("Ecuatoriana")) {
+			condicionGenerica = myCriteriaBuilder.equal(myFrom.get("edad"), edad);
+		} else if (nacionalidad.startsWith("Colombiana")) {
+			condicionGenerica = myCriteriaBuilder.equal(myFrom.get("edad"), edad);
+		} else {
+			condicionGenerica = myCriteriaBuilder.equal(myFrom.get("cedula"), cedula);
+		}
+		myCriteriaQuery.select(myFrom).where(condicionGenerica);
+		TypedQuery<Ciudadano> myTypedQuery = this.entityManager.createQuery(myCriteriaQuery);
+		return myTypedQuery.getSingleResult();
+	}
+
+	@Override
+	public List<Ciudadano> seleccionarPorCriteria2(String edad, String titulo) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder myCriteriaBuilder = this.entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<Ciudadano> myCriteriaQuery = myCriteriaBuilder.createQuery(Ciudadano.class);
+
+		Root<Ciudadano> myFrom = myCriteriaQuery.from(Ciudadano.class);
+
+		Predicate condicionGenerica = null;
+
+		if (edad.contains("2")) {
+			condicionGenerica = myCriteriaBuilder.equal(myFrom.get("titulo"), titulo);
+		} else if (titulo.startsWith("Tecnico")) {
+			condicionGenerica = myCriteriaBuilder.equal(myFrom.get("titulo"), titulo);
+		} else {
+			condicionGenerica = myCriteriaBuilder.equal(myFrom.get("titulo"), titulo);
+		}
+		myCriteriaQuery.select(myFrom).where(condicionGenerica);
+		TypedQuery<Ciudadano> myTypedQuery = this.entityManager.createQuery(myCriteriaQuery);
+		return myTypedQuery.getResultList();
+	}
+
+	@Override
+	public Ciudadano seleccionarPorCriteria3(String nacionalidad, String titulo) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder myCriteriaBuilder = this.entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<Ciudadano> myCriteriaQuery = myCriteriaBuilder.createQuery(Ciudadano.class);
+
+		Root<Ciudadano> myFrom = myCriteriaQuery.from(Ciudadano.class);
+
+		Predicate condicionTotal = null;
+
+		Predicate condicionNacionalidad = myCriteriaBuilder.equal(myFrom.get("nacionalidad"), nacionalidad);
+
+		Predicate condicionTitulo = myCriteriaBuilder.equal(myFrom.get("titulo"), titulo);
+
+		if (nacionalidad.startsWith("Ecuatoriana")) {
+
+			condicionTotal = myCriteriaBuilder.or(condicionNacionalidad, condicionTitulo);
+		} else if (titulo.startsWith("Bachiller")) {
+
+			condicionTotal = myCriteriaBuilder.and(condicionNacionalidad, condicionTitulo);
+		}else {
+			return null;
+		}
+
+		myCriteriaQuery.select(myFrom).where(condicionTotal);
 		TypedQuery<Ciudadano> myTypedQuery = this.entityManager.createQuery(myCriteriaQuery);
 		return myTypedQuery.getSingleResult();
 	}

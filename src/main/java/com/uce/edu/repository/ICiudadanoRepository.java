@@ -1,5 +1,7 @@
 package com.uce.edu.repository;
 
+import java.util.List;
+
 import com.uce.edu.repository.modelo.Ciudadano;
 import com.uce.edu.repository.modelo.Empleado;
 
@@ -26,5 +28,22 @@ public interface ICiudadanoRepository {
 	public Ciudadano seleccionarPorCriteria(String nombre, String apellido, String cedula);
 
 	public Ciudadano seleccionarPorCriteriaAndOr(String nombre, String apellido, String cedula);
+
+	// TAREA
+
+	public Ciudadano seleccionarPorEdadCriteria(String edad);
+
+	public List<Ciudadano> seleccionarPorNacionalidadCriteria(String nacionalidad);
+
+	public Ciudadano seleccionarPorTituloCriteria(String titulo);
+
+	// Cuando sea Ecuatoriano o mayor a 20 años
+	public Ciudadano seleccionarPorCriteria1(String edad, String nacionalidad, String cedula);
+
+	// Cuando sea mayor a 21 años o tenga titulo tecnico
+	public List<Ciudadano> seleccionarPorCriteria2(String edad, String titulo);
+
+	// Cuando sea Ecuatoriano y tenga titulo bachiller
+	public Ciudadano seleccionarPorCriteria3(String nacionalidad, String titulo);
 
 }

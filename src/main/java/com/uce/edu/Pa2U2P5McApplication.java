@@ -1,5 +1,7 @@
 package com.uce.edu;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,41 +29,48 @@ public class Pa2U2P5McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		// CRITERIA API QUERY
+		// TAREA: 5 EJEMPLOS QUERY
+		
+		System.out.println("Consulta 1--------------------------------------");
+		// select c1_0.ciud_id,c1_0.ciud_apellido,c1_0.ciud_cedula,c1_0.ciud_edad,c1_0.ciud_nacionalidad,c1_0.ciud_nombre,c1_0.ciud_titulo
+		// from ciudadano c1_0 where c1_0.ciud_edad=?
+		Ciudadano ciudadano1 = this.ciudadanoService.buscarPorEdadCriteria("23");
+		System.out.println(ciudadano1);
 
-		Ciudadano ciu = this.ciudadanoService.buscarPorApellido("Gomez");
-		System.out.println(ciu);
+		
+		System.out.println("Consulta 2--------------------------------------");
+		// select c1_0.ciud_id,c1_0.ciud_apellido,c1_0.ciud_cedula,c1_0.ciud_edad,c1_0.ciud_nacionalidad,c1_0.ciud_nombre,c1_0.ciud_titulo
+		// from ciudadano c1_0 where c1_0.ciud_nacionalidad=?
+		List<Ciudadano> ciudadano2 = this.ciudadanoService.buscarPorNacionalidadCriteria("Ecuatoriana");
+		System.out.println(ciudadano2);
 
-		// select
-		// c1_0.ciud_id,c1_0.ciud_apellido,c1_0.ciud_cedula,c1_0.ciud_edad,c1_0.ciud_nacionalidad,c1_0.ciud_nombre,c1_0.ciud_titulo
-		// from ciudadano c1_0 where c1_0.ciud_nombre=?
-		Ciudadano ciu1 = this.ciudadanoService.buscarPorCriteria("Miguel", "Fernandez", "17171717");
-		System.out.println(ciu1);
+		
+		System.out.println("Consulta 3--------------------------------------");
+		// select c1_0.ciud_id,c1_0.ciud_apellido,c1_0.ciud_cedula,c1_0.ciud_edad,c1_0.ciud_nacionalidad,c1_0.ciud_nombre,c1_0.ciud_titulo
+		// from ciudadano c1_0 where c1_0.ciud_titulo=?
+		Ciudadano ciudadano3 = this.ciudadanoService.buscarPorTituloCriteria("Tecnico");
+		System.out.println(ciudadano3);
 
-		// select
-		// c1_0.ciud_id,c1_0.ciud_apellido,c1_0.ciud_cedula,c1_0.ciud_edad,c1_0.ciud_nacionalidad,c1_0.ciud_nombre,c1_0.ciud_titulo
-		// from ciudadano c1_0 where c1_0.ciud_apellido=?
-		Ciudadano ciu2 = this.ciudadanoService.buscarPorCriteria("Miguel", "Fernandez", "05050505");
-		System.out.println(ciu2);
+		
+		System.out.println("Consulta 4--------------------------------------");
+		// select c1_0.ciud_id,c1_0.ciud_apellido,c1_0.ciud_cedula,c1_0.ciud_edad,c1_0.ciud_nacionalidad,c1_0.ciud_nombre,c1_0.ciud_titulo
+		// from ciudadano c1_0 where c1_0.ciud_edad=?
+		Ciudadano ciudadano4 = this.ciudadanoService.buscarPorCriteria1("23", "Ecuatoriana", "1724362106");
+		System.out.println(ciudadano4);
 
-		// select
-		// c1_0.ciud_id,c1_0.ciud_apellido,c1_0.ciud_cedula,c1_0.ciud_edad,c1_0.ciud_nacionalidad,c1_0.ciud_nombre,c1_0.ciud_titulo
-		// from ciudadano c1_0 where c1_0.ciud_cedula=?
-		Ciudadano ciu3 = this.ciudadanoService.buscarPorCriteria("Miguel", "Fernandez", "17171717");
-		System.out.println(ciu3);
+		
+		System.out.println("Consulta 5--------------------------------------");
+		// select c1_0.ciud_id,c1_0.ciud_apellido,c1_0.ciud_cedula,c1_0.ciud_edad,c1_0.ciud_nacionalidad,c1_0.ciud_nombre,c1_0.ciud_titulo 
+		//from ciudadano c1_0 where c1_0.ciud_titulo=?
+		List<Ciudadano> ciudadano5 = this.ciudadanoService.buscarPorCriteria2("21", "Bachiller");
+		System.out.println(ciudadano5);
 
-		System.out.println("Criteria API Query And Or");
-		// select
-		// c1_0.ciud_id,c1_0.ciud_apellido,c1_0.ciud_cedula,c1_0.ciud_edad,c1_0.ciud_nacionalidad,c1_0.ciud_nombre,c1_0.ciud_titulo
-		// from ciudadano c1_0 where c1_0.ciud_nombre=? or c1_0.ciud_apellido=?
-		Ciudadano ciu4 = this.ciudadanoService.buscarPorCriteriaAndOr("Miguel", "Fernandez", "17171717");
-		System.out.println(ciu4);
+		System.out.println("Consulta 6--------------------------------------");
+		//select c1_0.ciud_id,c1_0.ciud_apellido,c1_0.ciud_cedula,c1_0.ciud_edad,c1_0.ciud_nacionalidad,c1_0.ciud_nombre,c1_0.ciud_titulo 
+		//from ciudadano c1_0 where c1_0.ciud_nacionalidad=? and c1_0.ciud_titulo=?
+		Ciudadano ciudadano6 = this.ciudadanoService.buscarPorCriteria3("Colombiana", "Bachiller");
+		System.out.println(ciudadano6);
 
-		// select
-		// c1_0.ciud_id,c1_0.ciud_apellido,c1_0.ciud_cedula,c1_0.ciud_edad,c1_0.ciud_nacionalidad,c1_0.ciud_nombre,c1_0.ciud_titulo
-		// from ciudadano c1_0 where c1_0.ciud_nombre=? and c1_0.ciud_apellido=?
-		Ciudadano ciu5 = this.ciudadanoService.buscarPorCriteriaAndOr("Miguel", "Fernandez", "05050505");
-		System.out.println(ciu5);
 	}
 
 }
