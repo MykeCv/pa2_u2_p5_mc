@@ -50,33 +50,21 @@ public class ICiudadanoServiceImpl implements ICiudadanoService {
 	}
 
 	@Override
-	public Ciudadano buscarPorNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return this.ciudadanoRepository.seleccionarPorNombre(nombre);
-	}
-
-	@Override
 	public Ciudadano buscarPorApellido(String apellido) {
 		// TODO Auto-generated method stub
 		return this.ciudadanoRepository.seleccionarPorApellido(apellido);
 	}
 
 	@Override
-	public Ciudadano buscarPorNacionalidad(String nacionalidad) {
+	public Ciudadano buscarPorCriteria(String nombre, String apellido, String cedula) {
 		// TODO Auto-generated method stub
-		return this.ciudadanoRepository.seleccionarPorNacionalidad(nacionalidad);
+		return this.ciudadanoRepository.seleccionarPorCriteria(nombre, apellido, cedula);
 	}
 
 	@Override
-	public Ciudadano buscarPorEdad(String edad) {
+	public Ciudadano buscarPorCriteriaAndOr(String nombre, String apellido, String cedula) {
 		// TODO Auto-generated method stub
-		return this.ciudadanoRepository.seleccionarPorEdad(edad);
-	}
-
-	@Override
-	public Ciudadano buscarPorTitulo(String titulo) {
-		// TODO Auto-generated method stub
-		return this.ciudadanoRepository.seleccionarPorTitulo(titulo);
+		return this.ciudadanoRepository.seleccionarPorCriteriaAndOr(nombre, apellido, cedula);
 	}
 
 }

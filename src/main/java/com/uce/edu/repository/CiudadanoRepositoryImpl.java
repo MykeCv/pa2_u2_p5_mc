@@ -9,6 +9,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 
 @Repository
@@ -63,50 +67,92 @@ public class CiudadanoRepositoryImpl implements ICiudadanoRepository {
 		return (Ciudadano) myQuery.getSingleResult();
 	}
 
-//5 TypedQuery--------------------------------------------
-	@Override
-	public Ciudadano seleccionarPorNombre(String nombre) {
-		// TODO Auto-generated method stub
-		Query myQuery = this.entityManager.createNativeQuery("SELECT * FROM ciudadano n WHERE n.ciud_nombre = :nombre",
-				Ciudadano.class);
-		myQuery.setParameter("nombre", nombre);
-		return (Ciudadano) myQuery.getSingleResult();
-	}
-
 	@Override
 	public Ciudadano seleccionarPorApellido(String apellido) {
 		// TODO Auto-generated method stub
-		Query myQuery = this.entityManager
-				.createNativeQuery("SELECT * FROM ciudadano a WHERE a.ciud_apellido = :apellido", Ciudadano.class);
-		myQuery.setParameter("apellido", apellido);
-		return (Ciudadano) myQuery.getSingleResult();
+		// SELECT c FROM Ciudadano c WHERE c.apellido :variable
+		// 0. Creamos una instancia de la interfaz CriteriaBuilder a partir de un entity
+		// manager
+		CriteriaBuilder myCriteria = this.entityManager.getCriteriaBuilder();
+
+		// 1. Determinamos el tipo de retorno que va a tener mi Consulta
+		CriteriaQuery<Ciudadano> myCriteriaQuery = myCriteria.createQuery(Ciudadano.class);
+		// 2. Construir nuestro SQL
+		// 2.1 Determinamos el FROM (Root)
+		// Nota: No necesariamente el from es igual al tipo de retorno
+		// SELECT c FROM Ciudadano c WHERE c.nombre =:dato
+
+		Root<Ciudadano> myFrom = myCriteriaQuery.from(Ciudadano.class); // FROM Ciudadano
+		// 2.2 Construir las condiciones (WHERE del SQL)
+		// En criteria apoi query las condiciones se las conoce como Predicadate
+		// c.apellido = :variable
+		Predicate condicionApellido = myCriteria.equal(myFrom.get("apellido"), apellido);
+		// 3. Construimos nuestro SQL final
+		myCriteriaQuery.select(myFrom).where(condicionApellido);
+		// 4. Ejecutamos la consulta con un typedQuery
+		TypedQuery<Ciudadano> myTypedQuery = this.entityManager.createQuery(myCriteriaQuery);
+		return myTypedQuery.getSingleResult();
 	}
 
 	@Override
-	public Ciudadano seleccionarPorNacionalidad(String nacionalidad) {
+	public Ciudadano seleccionarPorCriteria(String nombre, String apellido, String cedula) {
 		// TODO Auto-generated method stub
-		Query myQuery = this.entityManager.createNativeQuery(
-				"SELECT * FROM ciudadano na WHERE na.ciud_nacionalidad = :nacionalidad", Ciudadano.class);
-		myQuery.setParameter("nacionalidad", nacionalidad);
-		return (Ciudadano) myQuery.getSingleResult();
+		// 0. Creamos una instancia de interfaz CriteriaBuilder
+		CriteriaBuilder myCriteriaBuilder = this.entityManager.getCriteriaBuilder();
+		// 1. Determinamos el tipo de retorno que va a tener mi consulta
+		CriteriaQuery<Ciudadano> myCriteriaQuery = myCriteriaBuilder.createQuery(Ciudadano.class);
+		// 2. Contruimos el SQL
+		// 2.1 Determinamos el FROM a travez de una interfaz (Root)
+		Root<Ciudadano> myFrom = myCriteriaQuery.from(Ciudadano.class);
+		// 2.2 Construir las condiciones del WHERE por el predicate
+
+		Predicate condicionGenerica = null;
+
+		if (cedula.startsWith("17")) {
+			condicionGenerica = myCriteriaBuilder.equal(myFrom.get("nombre"), nombre);
+		} else if (cedula.startsWith("05")) {
+			condicionGenerica = myCriteriaBuilder.equal(myFrom.get("apellido"), apellido);
+		} else {
+			condicionGenerica = myCriteriaBuilder.equal(myFrom.get("cedula"), cedula);
+		}
+
+		// 3. Construimos el SQL final
+		myCriteriaQuery.select(myFrom).where(condicionGenerica);
+		// 4. Ejecutamos la consulta con un typedQuery
+		TypedQuery<Ciudadano> myTypedQuery = this.entityManager.createQuery(myCriteriaQuery);
+		return myTypedQuery.getSingleResult();
 	}
 
 	@Override
-	public Ciudadano seleccionarPorEdad(String edad) {
+	public Ciudadano seleccionarPorCriteriaAndOr(String nombre, String apellido, String cedula) {
 		// TODO Auto-generated method stub
-		Query myQuery = this.entityManager.createNativeQuery("SELECT * FROM ciudadano ed WHERE ed.ciud_edad = :edad",
-				Ciudadano.class);
-		myQuery.setParameter("edad", edad);
-		return (Ciudadano) myQuery.getSingleResult();
+		// 0. Creamos una instancia de interfaz CriteriaBuilder
+		CriteriaBuilder myCriteriaBuilder = this.entityManager.getCriteriaBuilder();
+		// 1. Determinamos el tipo de retorno que va a tener mi consulta
+		CriteriaQuery<Ciudadano> myCriteriaQuery = myCriteriaBuilder.createQuery(Ciudadano.class);
+		// 2. Contruimos el SQL
+		// 2.1 Determinamos el FROM a travez de una interfaz (Root)
+		Root<Ciudadano> myFrom = myCriteriaQuery.from(Ciudadano.class);
+		// 2.2 Construir las condiciones del WHERE por el predicate
+
+		Predicate condicionTotal = null;
+		// c.nombre = :nombre
+		Predicate condicionNombre = myCriteriaBuilder.equal(myFrom.get("nombre"), nombre);
+		// c.apelliod =:apellido
+		Predicate condicionApellido = myCriteriaBuilder.equal(myFrom.get("apellido"), apellido);
+
+		if (cedula.startsWith("17")) {
+			// c.nombre = :nombre or c.apelliod =:apellido
+			condicionTotal = myCriteriaBuilder.or(condicionNombre, condicionApellido);
+		} else if (cedula.startsWith("05")) {
+			// c.nombre = :nombre and c.apelliod =:apellido
+			condicionTotal = myCriteriaBuilder.and(condicionNombre, condicionApellido);
+		}
+		// 3. Construimos el SQL final
+		myCriteriaQuery.select(myFrom).where(condicionTotal);
+		// 4. Ejecutamos la consulta con un typedQuery
+		TypedQuery<Ciudadano> myTypedQuery = this.entityManager.createQuery(myCriteriaQuery);
+		return myTypedQuery.getSingleResult();
 	}
 
-	@Override
-	public Ciudadano seleccionarPorTitulo(String titulo) {
-		// TODO Auto-generated method stub
-		Query myQuery = this.entityManager.createNativeQuery("SELECT * FROM ciudadano t WHERE t.ciud_titulo = :titulo",
-				Ciudadano.class);
-		myQuery.setParameter("titulo", titulo);
-		return (Ciudadano) myQuery.getSingleResult();
-	}
-//NamedQuery----------------------------------------------------
 }

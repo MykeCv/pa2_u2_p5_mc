@@ -16,16 +16,11 @@ public interface ICiudadanoService {
 	public Empleado buscarPorCedula(String cedula);
 
 	public Ciudadano buscarPorCedulaCiud(String cedula);
-	// ******
-
-	public Ciudadano buscarPorNombre(String nombre);
 
 	public Ciudadano buscarPorApellido(String apellido);
 
-	public Ciudadano buscarPorNacionalidad(String nacionalidad);
+	public Ciudadano buscarPorCriteria(String nombre, String apellido, String cedula);
 
-	public Ciudadano buscarPorEdad(String edad);
-
-	public Ciudadano buscarPorTitulo(String titulo);
+	public Ciudadano buscarPorCriteriaAndOr(String nombre, String apellido, String cedula);
 
 }

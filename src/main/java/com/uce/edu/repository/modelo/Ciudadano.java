@@ -39,11 +39,20 @@ public class Ciudadano {
 	private String titulo;
 
 	@OneToOne(mappedBy = "ciudadano", cascade = CascadeType.ALL)
-    private Empleado empleado;
+	private Empleado empleado;
+
+	// ToString
 
 	// set y get
 	public Integer getId() {
 		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "Ciudadano [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", cedula=" + cedula
+				+ ", nacionalidad=" + nacionalidad + ", edad=" + edad + ", titulo=" + titulo + ", empleado=" + empleado
+				+ "]";
 	}
 
 	public void setId(Integer id) {
